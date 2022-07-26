@@ -1,2 +1,8 @@
+# Project
 
-/.idea/
+.idea/
+
+# Library
+
+vendor/
+composer.lock
