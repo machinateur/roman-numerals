@@ -47,13 +47,26 @@ final class Convert
     ];
 
     /**
+     * Convert a roman numeral formatted string to its integer equivalent.
+     *
+     * The format is described loosely by [this regex](https://regex101.com/r/RM9IxV/1).
+     *
      * @param string $romanNumeral
      * @return int
+     * @throws \InvalidArgumentException Argument type is not `string`
+     * @throws \UnexpectedValueException Argument format error
      */
     public static function toInteger($romanNumeral)
     {
-        assert(is_string($romanNumeral));
-        assert(1 === preg_match('/[NIVXLCDM]+/', $romanNumeral));
+        if (!\is_string($romanNumeral)) {
+            throw new \InvalidArgumentException(\sprintf('The argument must be of type "string", got "%s"!',
+                \is_object($romanNumeral) ? \get_class($romanNumeral) : \gettype($romanNumeral)), 10);
+        }
+
+        if (1 !== \preg_match('/^N|[IVXLCDM]+$/', $romanNumeral)) {
+            throw new \UnexpectedValueException(\sprintf('The argument format is invalid: "%s".',
+                $romanNumeral), 20);
+        }
 
         if ('N' === $romanNumeral) {
             return 0;
@@ -62,10 +75,15 @@ final class Convert
         $integer = 0;
 
         foreach (self::$SYMBOL_MAP as $symbol => $value) {
-            while (0 === strpos($romanNumeral, $symbol)) {
-                $romanNumeral = substr($romanNumeral, strlen($symbol));
+            while (0 === \strpos($romanNumeral, $symbol)) {
+                $romanNumeral = \substr($romanNumeral, \strlen($symbol));
                 $integer += $value;
             }
+        }
+
+        if (0 !== strlen($romanNumeral)) {
+            throw new \UnexpectedValueException(\sprintf('The argument could not fully be converted: "%s".',
+                $romanNumeral), 30);
         }
 
         return $integer;
@@ -74,11 +92,19 @@ final class Convert
     /**
      * @param int $integer
      * @return string
+     * @throws \InvalidArgumentException Argument type is not `int`
+     * @throws \OutOfRangeException Argument is not in valid range (0,3999)
      */
     public static function toRomanNumeral($integer)
     {
-        assert(is_int($integer));
-        assert(0 <= $integer && 3999 >= $integer);
+        if (!\is_int($integer)) {
+            throw new \InvalidArgumentException(sprintf('The argument must be of type "int", got "%s"!',
+                \is_object($integer) ? \get_class($integer) : \gettype($integer)), 10);
+        }
+
+        if (0 > $integer || 3999 < $integer) {
+            throw new \OutOfRangeException('The argument must be in range 0-3999!', 40);
+        }
 
         if (0 === $integer) {
             return 'N';
