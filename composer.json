@@ -1,0 +1,32 @@
+{
+    "name": "machinateur/roman-numerals",
+    "type": "library",
+    "license": "MIT",
+    "description": "A PHP library to convert ordinary integers to roman numerals (and back). Just like that.",
+    "keywords": [
+        "numeral-system",
+        "Convert",
+        "roman-numerals",
+        "latin-alphabet"
+    ],
+    "homepage": "https://github.com/machinateur/roman-numerals",
+    "authors": [
+        {
+            "name": "Marcel",
+            "email": "hello@machinateur.dev"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Machinateur\\RomanNumerals\\": "src/"
+        }
+    },
+    "archive": {
+        "exclude": [
+            "/demo"
+        ]
+    }
+}
