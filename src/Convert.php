@@ -47,6 +47,25 @@ final class Convert
     ];
 
     /**
+     * @var array<string, int>
+     */
+    private static $COUNT_MAP = [
+        'M' => 3,
+        'CM' => 1,
+        'D' => 1,
+        'CD' => 1,
+        'C' => 3,
+        'XC' => 1,
+        'L' => 1,
+        'XL' => 1,
+        'X' => 3,
+        'IX' => 1,
+        'V' => 1,
+        'IV' => 1,
+        'I' => 3,
+    ];
+
+    /**
      * Convert a roman numeral formatted string to its integer equivalent.
      *
      * The format is described loosely by [this regex](https://regex101.com/r/RM9IxV/1).
@@ -75,9 +94,18 @@ final class Convert
         $integer = 0;
 
         foreach (self::$SYMBOL_MAP as $symbol => $value) {
+            $count = 0;
+
             while (0 === \strpos($romanNumeral, $symbol)) {
                 $romanNumeral = \substr($romanNumeral, \strlen($symbol));
                 $integer += $value;
+
+                if (++$count > self::$COUNT_MAP[$symbol]) {
+                    throw new \UnexpectedValueException(sprintf('The argument is not well-formed and could not '
+                        . 'fully be converted: "%s". The "%s" symbol occurred more than %s.',
+                        $romanNumeral, $symbol, 1 === self::$COUNT_MAP[$symbol] ? 'once' : 'the allowed '
+                            . self::$COUNT_MAP[$symbol] . ' times'), 60);
+                }
             }
         }
 
@@ -117,6 +145,10 @@ final class Convert
                 $integer -= $value;
                 $romanNumeral .= $symbol;
             }
+        }
+
+        if (0 !== $integer) {
+            throw new \OutOfRangeException(sprintf('The argument could not fully be converted: "%d"', $integer), 50);
         }
 
         return $romanNumeral;
