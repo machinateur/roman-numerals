@@ -118,10 +118,14 @@ final class Convert
     }
 
     /**
+     * Convert an integer to its roman numeral formatted string equivalent.
+     *
+     * The value must be in the range from 0 to 3999.
+     *
      * @param int $integer
      * @return string
      * @throws \InvalidArgumentException Argument type is not `int`
-     * @throws \OutOfRangeException Argument is not in valid range (0,3999)
+     * @throws \OutOfRangeException Argument is not in valid range (0, 3999)
      */
     public static function toRomanNumeral($integer)
     {
