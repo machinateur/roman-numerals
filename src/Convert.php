@@ -148,7 +148,7 @@ final class Convert
         }
 
         if (0 !== $integer) {
-            throw new \OutOfRangeException(sprintf('The argument could not fully be converted: "%d"', $integer), 50);
+            throw new \OutOfRangeException(\sprintf('The argument could not fully be converted: "%d"', $integer), 50);
         }
 
         return $romanNumeral;
