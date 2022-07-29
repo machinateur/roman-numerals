@@ -8,7 +8,7 @@ A PHP library to convert ordinary integers to roman numerals (and back). Just li
 * [Composer](https://getcomposer.org/download/)
 
 Yes, you've read that right, PHP 5.6 is the minimum version requirement to be able to use this package. That is to
-support legacy projects, atr least for some versions. The minimum PHP version requirement might be raised in the future.
+support legacy projects, at least for some versions. The minimum PHP version requirement might be raised in the future.
 
 ## Installation
 
