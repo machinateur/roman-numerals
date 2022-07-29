@@ -27,7 +27,7 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use Machinateur\RomanNumerals\Convert;
 
-$list = [399, 35, 67, 8, 4, 55, 10, 1002, 459, 3999];
+$list = [0, 399, 35, 67, 8, 4, 55, 10, 1002, 459, 3999];
 
 foreach ($list as $value) {
     $romanNumeral = Convert::toRomanNumeral($value);
